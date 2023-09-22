@@ -53,12 +53,12 @@ class Ignitz(models.Model):
         return self.Candidate_Name
 
 
-# class Attendance(models.Model):
-#     Student_Id=models.IntegerField()
-#     Student_Names=models.CharField(max_length=100)
-#     # Present_Date=models.DateField()
-#     Present_Date = models.DateField(null=True, blank=True)
-#     Status=models.CharField(max_length=100)
+class Attendance(models.Model):
+    Student_Id=models.IntegerField()
+    Student_Names=models.CharField(max_length=100)
+    # Present_Date=models.DateField()
+    Present_Date = models.DateField(null=True, blank=True)
+    Status=models.CharField(max_length=100)
 
 
 class Attendance(models.Model):
