@@ -22,7 +22,7 @@ from app2 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('reg/', views.registration_view, name="registration"),
-    path('home/', views.home_view, name="home"),
+    path('', views.home_view, name="home"),
     path('attendance/', views.Attendance_view, name="attendance"),
     path('about/', views.about_view, name="about"),
     path('cd/', views.coursedetails_view, name="coursedetails"),
@@ -30,7 +30,8 @@ urlpatterns = [
     path('Ad/', views.Attendance_details_view, name="attendance_details"),
     path('login/', views.Login_view, name="login"),
     path('loginmain/', views.loginmain_view, name="loginmain"),
-
+    path('studentPassword/', views.StudentPassword, name="studentPassword"),
+    path('studentLogin/', views.StdLogin_view, name="studentlogin"),
 ]
 
 

@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'phone_field',
     'app2',
 ]
 
@@ -83,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Registration_Forms',
         'USER':'root',
-        'PASSWORD':'root',
+        'PASSWORD':'madan@123',
         'HOST':'localhost',
         'PORT' : '3306'
     }

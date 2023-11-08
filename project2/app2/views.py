@@ -1,11 +1,33 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from app2.models import *
 from .import forms
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import ObjectDoesNotExist
+from app2.models import StudentPassword
+from django.db import models
 
+
+def StdLogin_view(request):
+    if request.method == 'POST':
+        # form =forms.LoginForm
+        # if form.is_valid():
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(password)
+        try:
+          userA=StudentPassword.objects.get(username=username)
+        except ObjectDoesNotExist:
+            return HttpResponse("Invalid login credentials")
+        if userA.password==password:
+            return redirect('home.html')
+        else:
+            return HttpResponse("Username or password is incorrect")
+    else:
+        return render(request,'studentLogin.html')        
+    # return render(request,'studentLogin.html')  
 
 
 
@@ -53,80 +75,46 @@ def Attendance_view(request):
     return render(request,'attendance.html',{'form':form})
 
 
-
-
-# def Login_view(request):
-#     form=forms.LoginForm
-#     if request.method=="POST":
-#         form=forms.LoginForm(request.POST)
-#         if form.is_valid():
-#             form.save(commit=True)      
-#     return render(request,'login.html',{'form':form})
-
-
-
-# def Login_view(request):
-#     if request.method == 'POST':
-#         form =forms.LoginForm(request.POST)
-#         if form.is_valid():
-#             email = request.POST.get('Mail_Id')
-#             password = request.POST.get('Password')
-#             user = authenticate(request, username=email, password=password)
-#             if user is not None:
-#                 login(request, user)
-#                 return redirect('loginmain')
-#             else:
-#                 error_message = "Invalid login credentials"
-#         else:
-#             error_message = "Form is not valid"
-#     else:
-#         form = forms.LoginForm()
-#         error_message = None
-
-#     return render(request, 'login.html', {'form': form, 'error_message': error_message})
-
-
 def Login_view(request):
     if request.method == 'POST':
-        Mail_Id = request.POST.get('Mail_Id')
-        password = request.POST.get('Password')
-
-        try:
-            user_profile = Login.objects.get(Mail_Id=Mail_Id)
-        except Login.DoesNotExist:
-            return HttpResponse("User does not exist.")
-
-        if user_profile.password == password:
-            return render(request, 'loginmain.html')
+        # form =forms.LoginForm
+        # if form.is_valid():
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(password)
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request,user)
+            return redirect('loginmain')
         else:
-            return HttpResponse("Username or password is incorrect.")
-    else:
-        return render(request, 'loginmain.html')
-
-
-
-
-# def Login_view(request):
-#     if request.method == 'POST':
-#         form =forms.LoginForm(request.POST)
-#         if form.is_valid():
-#             email = request.POST.get('Mail_Id')
-#             password = request.POST.get('Password')
-#             user = authenticate(request, username=email, password=password)
-#             if user is not None:
-#                 login(request, user)
-#                 return redirect('loginmain')
-#             else:
-#                 error_message = "Invalid login credentials"
-#     return render(request, 'login.html')
+                # return redirect('loginmain')
+            return HttpResponse("Invalid login credentials")
+    return render(request,'login.html')
 @login_required
 def loginmain_view(request):
     return render(request,'loginmain.html')
 
+def StudentPassword(request):
+    form=forms.StdPasswordForm
+    if request.method=="POST":
+        form=forms.StdPasswordForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+    return render(request,'StdCreatePassword.html',{'form':form})
 
+ 
+@login_required
+def loginmain_view(request):
+    return render(request,'loginmain.html')
 
-
-
-
-
-
+def signupPage(request):
+    if request.method=='POST':
+        uname=request.POST.get('username')
+        email=request.POST.get('email')
+        pass1=request.POST.get('password1')
+        pass2=request.POST.get('password2')
+        if pass1 != pass2:
+            return HttpResponse("password should be same")
+        else:  
+            signupPage.save(commit=True)
+    return render(request,'StdCreatePassword.html')

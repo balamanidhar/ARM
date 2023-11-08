@@ -82,6 +82,14 @@ class Attendance(models.Model):
 
 
 class Login(models.Model):
-    Mail_Id=models.EmailField()
-    Password=models.CharField(max_length=100)
-    
+    username=models.EmailField()
+    password=models.CharField(max_length=100)
+class StudentPassword(models.Model) :
+    username=models.CharField(max_length=20)  
+    password=models.CharField(max_length=30)
+    confim_password=models.CharField(max_length=30)
+    def __str__(self):
+        return self.username
+# class StdLogin(models.Model) :
+#     username=models.CharField(max_length=20)  
+#     password=models.CharField(max_length=30)
